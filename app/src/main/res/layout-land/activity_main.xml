@@ -249,18 +249,18 @@
 
         <TextView
             android:id="@+id/update_request_time"
-            android:layout_width="153dp"
+            android:layout_width="203dp"
             android:layout_height="21dp"
             android:text="2020-02-01 "
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textSize="11sp"
+            android:textAlignment="textStart"
+            android:textColor="#555"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.714"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.519"
             tools:ignore="MissingConstraints" />
 
         <TextView

@@ -284,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
                                 "forecast_prec_mm:forecast/parts/1/prec_mm",
                                 "forecast_wind_dir:forecast/parts/1/wind_dir",
                                 "forecast_wind_speed:forecast/parts/1/wind_speed",
+                                "update_request_time:now_dt"
                         };
 
                         TextView LayoutView = null;
