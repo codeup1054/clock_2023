@@ -350,7 +350,6 @@ public class MainActivity extends AppCompatActivity {
                                         String[] moons = new String[] {"🌑","🌒","🌓","🌔","🌔","🌖","🌗","🌘","🌑"};
 
                                         stringMetricValue = moons[moon_code-1];
-                                        textDebug.append("moon_code=" + moon_code + ">>>\n");
 
                                         break;
                                 }
