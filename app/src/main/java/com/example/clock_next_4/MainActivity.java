@@ -40,6 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -286,8 +287,6 @@ public class MainActivity extends AppCompatActivity {
                         //hiding the progressbar after completion
 
                         String[] dataMapper = new String[]{
-                                "sunrise:forecast/sunrise",
-                                "sunset:forecast/sunset",
                                 "fact_temp:fact/temp",
                                 "fact_humidity:fact/humidity",
                                 "fact_pressure_mm:fact/pressure_mm",
@@ -301,6 +300,9 @@ public class MainActivity extends AppCompatActivity {
                                 "forecast_prec_mm:forecast/parts/1/prec_mm",
                                 "forecast_wind_dir:forecast/parts/1/wind_dir",
                                 "forecast_wind_speed:forecast/parts/1/wind_speed",
+                                "sunrise:forecast/sunrise",
+                                "sunset:forecast/sunset",
+                                "moon_code:forecast/moon_code",
                                 "update_request_time:now_dt"
                         };
 
@@ -341,6 +343,15 @@ public class MainActivity extends AppCompatActivity {
                                 switch (viewName){
                                     case ("update_request_time"):
                                         stringMetricValue = stringMetricValue.substring(0,19);
+                                        break;
+                                    case ("moon_code"):
+                                        int moon_code = Integer.parseInt(stringMetricValue);
+
+                                        String[] moons = new String[] {"🌑","🌒","🌓","🌔","🌔","🌖","🌗","🌘","🌑"};
+
+                                        stringMetricValue = moons[moon_code-1];
+                                        textDebug.append("moon_code=" + moon_code + ">>>\n");
+
                                         break;
                                 }
 

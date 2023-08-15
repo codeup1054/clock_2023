@@ -113,7 +113,7 @@
             android:text="27"
             android:textAlignment="textEnd"
             android:textColor="#cba"
-            android:textSize="150sp"
+            android:textSize="120sp"
             android:timeZone="GMT+0300"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -134,6 +134,22 @@
             android:timeZone="GMT+0300"
             tools:ignore="MissingConstraints" />
 
+        <TextView
+            android:id="@+id/moon_code"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="165dp"
+            android:layout_marginEnd="140dp"
+            android:format12Hour="dd"
+            android:format24Hour="dd"
+            android:text="🌑"
+            android:textAlignment="textEnd"
+            android:textColor="#cba"
+            android:textSize="45sp"
+            android:timeZone="GMT+0300"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/forecast_temp_avg"
@@ -286,7 +302,7 @@
             android:layout_height="72dp"
             android:layout_marginStart="4dp"
             android:text="0.6"
-            android:textAlignment="center"
+            android:textAlignment="textEnd"
             android:textColor="#cba"
             android:textSize="50sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -341,8 +357,8 @@
             app:layout_constraintVertical_bias="0.567" />
 
         <TextView
-            android:layout_width="33dp"
-            android:layout_height="36dp"
+            android:layout_width="52dp"
+            android:layout_height="94dp"
             android:rotation="-90"
             android:text="mm"
             android:textAlignment="center"
@@ -350,7 +366,7 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.081"
+            app:layout_constraintHorizontal_bias="0.13"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.564" />
