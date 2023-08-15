@@ -252,11 +252,25 @@ public class MainActivity extends AppCompatActivity {
             65, "prec_mm":0, "prec_prob":0, "prec_period":240, "icon":"skc_d", "condition":
             "partly-cloudy", "feels_like":23, "daytime":"d", "polar":false
            },{
-            "part_name":"night", "temp_min":14, "temp_avg":16, "temp_max":18, "wind_speed":
-            1.4, "wind_gust":4.3, "wind_dir":"nw", "pressure_mm":751, "pressure_pa":1001, "humidity":
-            86, "prec_mm":0, "prec_prob":0, "prec_period":480, "icon":"skc_n", "condition":
-            "clear", "feels_like":16, "daytime":"n", "polar":false
-           }]}
+            "part_name":"night",
+            "temp_min":14,
+            "temp_avg":16,
+            "temp_max":18,
+            "wind_speed":1.4,
+            "wind_gust":4.3,
+            "wind_dir":"nw",
+            "pressure_mm":751,
+            "pressure_pa":1001,
+            "humidity":86,
+            "prec_mm":0,
+            "prec_prob":0,
+            "prec_period":480,
+            "icon":"skc_n",
+            "condition":"clear",
+            "feels_like":16,
+            "daytime":"n",
+            "polar":false
+}]}
     }
 */
 
@@ -278,6 +292,9 @@ public class MainActivity extends AppCompatActivity {
                                 "fact_humidity:fact/humidity",
                                 "fact_pressure_mm:fact/pressure_mm",
                                 "forecast_temp_avg:forecast/parts/1/temp_avg",
+                                "forecast_temp_max:forecast/parts/1/temp_max",
+                                "forecast_temp_min:forecast/parts/1/temp_min",
+                                "forecast_feels_like:forecast/parts/1/feels_like",
                                 "forecast_humidity:forecast/parts/1/humidity",
                                 "forecast_pressure_mm:forecast/parts/1/pressure_mm",
                                 "forecast_prec_prob:forecast/parts/1/prec_prob",
@@ -320,6 +337,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 //                                textDebug.append("\n" + viewName + "," + stringMetricValue);
+/** post procceccing for View */
+                                switch (viewName){
+                                    case ("update_request_time"):
+                                        stringMetricValue = stringMetricValue.substring(0,19);
+                                        break;
+                                }
 
                                 int id = getResources().getIdentifier(viewName, "id", getPackageName());
                                 LayoutView = (TextView) findViewById(id);
