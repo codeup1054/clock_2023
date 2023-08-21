@@ -1,5 +1,6 @@
 package com.example.clock_next_4;
 
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Bundle;
@@ -165,6 +166,15 @@ public class MainActivity extends AppCompatActivity {
                 .into(plotImageView);
     }
 
+    private void moon_phase(String phase_num) {
+
+        int imageResource = getResources().getIdentifier( "@drawable/moon_" + phase_num, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+
+        ImageView moonImageView = findViewById(R.id.moon_phases_image);
+        moonImageView.setImageDrawable(res);
+    }
+
 
     private void moveWeekDay() {
 
@@ -204,8 +214,6 @@ public class MainActivity extends AppCompatActivity {
 
         int hours = 0;
         int minutes = 0;
-
-
 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
@@ -339,17 +347,23 @@ public class MainActivity extends AppCompatActivity {
 
 
 //                                textDebug.append("\n" + viewName + "," + stringMetricValue);
-/** post procceccing for View */
+
+/** post processing for View */
                                 switch (viewName){
                                     case ("update_request_time"):
                                         stringMetricValue = stringMetricValue.substring(0,19);
                                         break;
                                     case ("moon_code"):
-                                        int moon_code = Integer.parseInt(stringMetricValue);
 
-                                        String[] moons = new String[] {"🌑","🌒","🌓","🌔","🌔","🌖","🌗","🌘","🌑"};
+                                        /** moon_images */
 
-                                        stringMetricValue = moons[moon_code-1];
+                                        moon_phase(stringMetricValue);
+
+                                        /** moon_code_text */
+
+                                        int moon_code = Math.round(Float.parseFloat(stringMetricValue)/2);
+                                        String[] moons = new String[] {"🌖","🌗","🌘","🌑","🌒","🌓","🌔","🌔"};
+                                        stringMetricValue = moons[moon_code];
 
                                         break;
                                 }
