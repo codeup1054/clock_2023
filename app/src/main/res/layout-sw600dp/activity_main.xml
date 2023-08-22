@@ -104,7 +104,7 @@
             android:format24Hour="dd"
             android:text="27"
             android:textAlignment="textEnd"
-            android:textColor="#3fa"
+            android:textColor="#5ba"
             android:textSize="120sp"
             android:timeZone="GMT+0300"
             app:layout_constraintEnd_toEndOf="parent"
