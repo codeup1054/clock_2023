@@ -361,9 +361,9 @@ public class MainActivity extends AppCompatActivity {
 
                                         /** moon_code_text */
 
-                                        int moon_code = Math.round(Float.parseFloat(stringMetricValue)/2);
-                                        String[] moons = new String[] {"🌖","🌗","🌘","🌑","🌒","🌓","🌔","🌔"};
-                                        stringMetricValue = moons[moon_code];
+//                                        int moon_code = Math.round(Float.parseFloat(stringMetricValue)/2);
+//                                        String[] moons = new String[] {"🌖","🌗","🌘","🌑","🌒","🌓","🌔","🌔","🌔","🌕"};
+//                                        stringMetricValue = moons[moon_code];
 
                                         break;
                                 }
