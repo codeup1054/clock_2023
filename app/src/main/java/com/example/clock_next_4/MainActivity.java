@@ -45,7 +45,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import okhttp3.OkHttpClient;
+//import okhttp3.OkHttpClient;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
 
     public void onCreate(Bundle savedInstanceState) {
+
+        /** / https://stackoverflow.com/questions/36043324/android-volley-error-trust-anchor-for-certification-path-not-found-only-in-r */
 
         handleSSLHandshake();
 
@@ -402,51 +404,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-    public static OkHttpClient.Builder getUnsafeOkHttpClient() {
-        try {
-            // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[]{
-                    new X509TrustManager() {
-                        @Override
-                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
-
-                        @Override
-                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
-
-                        @Override
-                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                            return new java.security.cert.X509Certificate[]{};
-                        }
-                    }
-            };
-
-            // Install the all-trusting trust manager
-            final SSLContext sslContext = SSLContext.getInstance("SSL");
-            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-
-            // Create an ssl socket factory with our all-trusting manager
-            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
-//            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
-            builder.sslSocketFactory(sslSocketFactory);
-
-            builder.hostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            });
-            return builder;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
      * Enables https connections
      */
@@ -479,27 +436,5 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception ignored) {
         }
     }
-//    private void testOkHttp()
-//    {
-//        OkHttpClient client = new OkHttpClient();
-//
-//
-//        Request request = new Request.Builder()
-//                .url("https://gpxlab.ru/api/clock.php")
-//                .build();
-//
-//        try (Response response = client.newCall(request).execute()) {
-//            if (!response.isSuccessful()) {
-//                throw new IOException("Запрос к серверу не был успешен: " +
-//                        response.code() + " " + response.message());
-//            }
-//            // пример получения конкретного заголовка ответа
-//            System.out.println("Server: " + response.header("Server"));
-//            // вывод тела ответа
-//            System.out.println(response.body().string());
-//        } catch (IOException e) {
-//            System.out.println("Ошибка подключения: " + e);
-//        }
-//    }
 
 }
