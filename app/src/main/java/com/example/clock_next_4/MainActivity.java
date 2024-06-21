@@ -1,56 +1,51 @@
 package com.example.clock_next_4;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Bundle;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-
-
-import com.example.clock_next_4.databinding.ActivityMainBinding;
-
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextClock;
 import android.widget.TextView;
 
-/** volley */
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.VolleyError;
-import com.android.volley.AuthFailureError;
-
-
-/** glide */
-
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.clock_next_4.databinding.ActivityMainBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import okhttp3.OkHttpClient;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -88,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
 
+        handleSSLHandshake();
+
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
@@ -104,24 +101,25 @@ public class MainActivity extends AppCompatActivity {
 
         Button buttonParse = findViewById(R.id.button_parse);
 
-        buttonParse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View V) {
-//                Log.d("@@ 02. onClick", "01. On click");
-                moveWeekDay();
-                jsonParse();
-                plot("");
-            }
-        });
+//        buttonParse.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View V) {
+////                Log.d("@@ 02. onClick", "01. On click");
+//                moveWeekDay();
+//                jsonParse();
+//                plot("");
+//            }
+//        });
 
 
         buttonParse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View V) {
-//                Log.d("@@ 02. onClick", "01. On click");
+                Log.d("@@ 02. onClick", "01. On click");
                 moveWeekDay();
-                textDebug.setText("");
+                textDebug.setText("buttonParse, onClick");
                 jsonParse();
+//                testOkHttp();
                 plot("");
             }
         });
@@ -168,9 +166,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void moon_phase(String phase_num) {
 
-        int imageResource = getResources().getIdentifier( "@drawable/moon_" + phase_num, null, getPackageName());
-        Drawable res = getResources().getDrawable(imageResource);
 
+        String _moon_formatted = String.format("%02d", Integer.parseInt(phase_num ));
+
+//        textDebug.append("\n_moon_formatted:" + _moon_formatted);
+
+        int imageResource = getResources().getIdentifier( "@drawable/moon_" + _moon_formatted, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
         ImageView moonImageView = findViewById(R.id.moon_phases_image);
         moonImageView.setImageDrawable(res);
     }
@@ -398,5 +400,106 @@ public class MainActivity extends AppCompatActivity {
         //adding the string request to request queue
         requestQueue.add(stringRequest);
     }
+
+
+
+
+    public static OkHttpClient.Builder getUnsafeOkHttpClient() {
+        try {
+            // Create a trust manager that does not validate certificate chains
+            final TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        }
+
+                        @Override
+                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        }
+
+                        @Override
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return new java.security.cert.X509Certificate[]{};
+                        }
+                    }
+            };
+
+            // Install the all-trusting trust manager
+            final SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+
+            // Create an ssl socket factory with our all-trusting manager
+            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+//            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
+            builder.sslSocketFactory(sslSocketFactory);
+
+            builder.hostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
+            return builder;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Enables https connections
+     */
+    @SuppressLint("TrulyRandom")
+    public static void handleSSLHandshake() {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+
+                @Override
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }};
+
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String arg0, SSLSession arg1) {
+                    return true;
+                }
+            });
+        } catch (Exception ignored) {
+        }
+    }
+//    private void testOkHttp()
+//    {
+//        OkHttpClient client = new OkHttpClient();
+//
+//
+//        Request request = new Request.Builder()
+//                .url("https://gpxlab.ru/api/clock.php")
+//                .build();
+//
+//        try (Response response = client.newCall(request).execute()) {
+//            if (!response.isSuccessful()) {
+//                throw new IOException("Запрос к серверу не был успешен: " +
+//                        response.code() + " " + response.message());
+//            }
+//            // пример получения конкретного заголовка ответа
+//            System.out.println("Server: " + response.header("Server"));
+//            // вывод тела ответа
+//            System.out.println(response.body().string());
+//        } catch (IOException e) {
+//            System.out.println("Ошибка подключения: " + e);
+//        }
+//    }
 
 }

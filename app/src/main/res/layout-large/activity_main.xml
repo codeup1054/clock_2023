@@ -32,6 +32,22 @@
             android:timeZone="GMT+0300"
             tools:ignore="MissingConstraints" />
 
+        <TextView
+            android:id="@+id/moon_code"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="165dp"
+            android:layout_marginEnd="140dp"
+            android:format12Hour="dd"
+            android:format24Hour="dd"
+            android:text="🌑"
+            android:textAlignment="textEnd"
+            android:textColor="#cba"
+            android:textSize="45sp"
+            android:timeZone="GMT+0300"
+            android:visibility="invisible"
+            tools:ignore="MissingConstraints" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -79,13 +95,13 @@
             android:id="@+id/simpleDigitalClockMonth"
             android:layout_width="150dp"
             android:layout_height="32dp"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="190dp"
             android:layout_marginEnd="4dp"
             android:background="#00FF0000"
             android:format12Hour="MMMM"
             android:format24Hour="MMMM"
             android:paddingEnd="10dp"
-            android:text="Dec"
+            android:text="сентябрь"
             android:textAlignment="textEnd"
             android:textColor="#eda"
             android:textSize="28sp"
@@ -97,9 +113,8 @@
         <TextClock
             android:id="@+id/simpleDigitalClockDay"
             android:layout_width="197dp"
-            android:layout_height="199dp"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="0dp"
+            android:layout_height="184dp"
+            android:layout_marginTop="38dp"
             android:format12Hour="dd"
             android:format24Hour="dd"
             android:text="27"
@@ -127,24 +142,6 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/moon_code"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginTop="165dp"
-            android:layout_marginEnd="140dp"
-            android:format12Hour="dd"
-            android:format24Hour="dd"
-            android:text="🌑"
-            android:visibility="invisible"
-            android:textAlignment="textEnd"
-            android:textColor="#cba"
-            android:textSize="45sp"
-            android:timeZone="GMT+0300"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
             android:id="@+id/forecast_temp_avg"
             android:layout_width="120dp"
             android:layout_height="70dp"
@@ -163,7 +160,7 @@
             android:id="@+id/fact_temp"
             android:layout_width="120dp"
             android:layout_height="75dp"
-            android:text="-15"
+            android:text="-35"
             android:textAlignment="textEnd"
             android:textColor="#f42"
             android:textSize="60sp"
@@ -449,8 +446,8 @@
             android:layout_height="32dp"
             android:text="100%"
             android:textAlignment="textEnd"
-            android:textColor="#89a"
-            android:textSize="23sp"
+            android:textColor="#dc9"
+            android:textSize="19sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
@@ -464,7 +461,7 @@
             android:layout_height="47dp"
             android:text="09:29"
             android:textAlignment="center"
-            android:textColor="#a98"
+            android:textColor="#dc9"
             android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -479,7 +476,7 @@
             android:layout_height="48dp"
             android:text="12:00"
             android:textAlignment="center"
-            android:textColor="#cba"
+            android:textColor="#dc9"
             android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -494,7 +491,7 @@
             android:layout_height="46dp"
             android:text="19:09"
             android:textAlignment="center"
-            android:textColor="#a98"
+            android:textColor="#dc9"
             android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -512,8 +509,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.83"
-            app:layout_constraintVertical_bias=".37"
+            app:layout_constraintHorizontal_bias="0.82"
+            app:layout_constraintVertical_bias=".08"
             app:srcCompat="@drawable/moon_06" />
 
         <TextView
